@@ -6,24 +6,14 @@ services:
     depends_on:
       - db
 
-  pgadmin:
-    container_name: container-pgadmin
-    image: dpage/pgadmin4
-    depends_on:
-      - db
-    ports:
-      - "5050:80"
-    environment:
-      PGADMIN_DEFAULT_EMAIL: admin@admin.com
-      PGADMIN_DEFAULT_PASSWORD: password
-    restart: unless-stopped
-
   db:
     image: postgres:15
     environment:
       POSTGRES_USER: admin
       POSTGRES_PASSWORD: password
       POSTGRES_DB: localdb
+    ports:
+      - "5432:5432" # Expose the port for external access
     volumes:
       - db_data:/var/lib/postgresql/data
     restart: unless-stopped
