@@ -1,0 +1,22 @@
+# docker-compose.local.yml
+services:
+  app:
+    environment:
+      DATABASE_URL: "postgresql://admin:password@db:5432/localdb"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: localdb
+    ports:
+      - "5432:5432" # Expose the port for external access
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  db_data:
